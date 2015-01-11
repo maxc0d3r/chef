@@ -1,0 +1,13 @@
+tickTime=<%= node["zookeeper"]["tickTime"] %>
+maxClientCnxns=<%= node["zookeeper"]["maxClientCnxns"] %>
+initLimit=<%= node["zookeeper"]["initLimit"] %>
+syncLimit=<%= node["zookeeper"]["syncLimit"] %>
+dataDir=<%= node["zookeeper"]["data_dir"] %>
+clientPort=<%= node["zookeeper"]["clientPort"] %>
+<% if @zk_quorum.length > 0 %>
+<% @zk_quorum.each do |zk_nodes| %>
+server.<%= zk_nodes["ipaddress"].gsub(".","") %>=<%= zk_nodes["fqdn"] %>:2888:3888
+<% end %>
+<% else %>
+server.1=<%= node["hostname"] %>:2888:3888
+<% end %>
